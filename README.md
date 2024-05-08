@@ -56,6 +56,11 @@ require("mason").setup()
 require("mason-bridge").setup()
 
 -- After setting up mason-bridge you may set up conform.nvim and nvim-lint
+require("conform").setup({
+    formatters_by_ft = require("mason-bridge").get_formatters(),
+})
+
+require("lint").linters_by_ft = require("mason-bridge").get_linters()
 -- ...
 ```
 Refer to the [Configuration](#configuration) section for information about which settings are available.
