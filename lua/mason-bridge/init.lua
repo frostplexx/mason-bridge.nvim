@@ -1,5 +1,4 @@
 local M = {}
-local util = require 'util.bridge'
 
 -- Table to hold cached associations
 local cached_associations = {}
@@ -12,7 +11,8 @@ local DEFAULT_SETTINGS = {
     },
 }
 
-M.setup = function(opts, callback)
+M.setup = function(opts)
+    local util = require 'util.bridge'
     -- Load associations asynchronously
     util.load_associations_async(function(associations)
         -- Cache the loaded associations
@@ -24,9 +24,6 @@ M.setup = function(opts, callback)
         cached_associations.formatters =
             vim.tbl_deep_extend('force', cached_associations.formatters, opts.overrides.formatters)
         cached_associations.linters = vim.tbl_deep_extend('force', cached_associations.linters, opts.overrides.linters)
-        if callback then
-            callback()
-        end
     end)
 end
 

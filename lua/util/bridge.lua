@@ -1,9 +1,7 @@
-local registry = require 'mason-registry'
-
-local function utils_Set(list)
+local utils_Set = function(list)
     local set = {}
-    for _, item in ipairs(list) do
-        set[item] = true
+    for _, l in ipairs(list) do
+        set[l] = true
     end
     return set
 end
@@ -18,8 +16,8 @@ local function update_associations(associations, category, languages, name)
 end
 
 local function load_associations_async(callback)
-    -- Assume vim.schedule is available to handle the async behavior
     vim.schedule(function()
+        local registry = require 'mason-registry'
         local packages = registry.get_installed_packages()
         local associations = { formatters = {}, linters = {} }
 
