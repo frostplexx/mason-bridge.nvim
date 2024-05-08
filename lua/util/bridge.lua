@@ -1,5 +1,4 @@
-local registry = require('mason-registry')
-
+local registry = require 'mason-registry'
 
 local function utils_Set(list)
     local set = {}
@@ -31,11 +30,10 @@ local function load_associations()
         local categories = utils_Set(spec.categories)
         local languages = spec.languages
 
-
-        if categories["Formatter"] then
+        if categories['Formatter'] then
             -- print(vim.inspect(package))
             update_associations_table(associations, 'formatters', languages, name)
-        elseif categories["Linter"] then
+        elseif categories['Linter'] then
             -- print(vim.inspect(package))
             update_associations_table(associations, 'linters', languages, name)
         end
@@ -44,5 +42,5 @@ local function load_associations()
 end
 
 return {
-    load_associations = load_associations
+    load_associations = load_associations,
 }
