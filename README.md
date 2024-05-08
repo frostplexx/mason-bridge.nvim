@@ -56,6 +56,11 @@ require("mason").setup()
 require("mason-bridge").setup()
 
 -- After setting up mason-bridge you may set up conform.nvim and nvim-lint
+require("conform").setup({
+    formatters_by_ft = require("mason-bridge").get_formatters(),
+})
+
+require("lint").linters_by_ft = require("mason-bridge").get_linters()
 -- ...
 ```
 Refer to the [Configuration](#configuration) section for information about which settings are available.
@@ -97,6 +102,7 @@ local DEFAULT_SETTINGS = {
 
 - [ ] Add a handler system similar to `mason-lspconfig.nvim` and `mason-nvim-dap.nvim`
 - [ ] Testing if the all filetypes are detected correctly is required
+- [ ] Add vim help file
 
 # Similar Projects
 
