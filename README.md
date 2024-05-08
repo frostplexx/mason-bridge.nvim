@@ -102,6 +102,7 @@ local DEFAULT_SETTINGS = {
 
 - [ ] Add a handler system similar to `mason-lspconfig.nvim` and `mason-nvim-dap.nvim`
 - [ ] Testing if the all filetypes are detected correctly is required
+- [ ] Add vim help file
 
 # Similar Projects
 
