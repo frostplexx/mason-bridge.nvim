@@ -7,7 +7,7 @@
 
 # Introduction
 
-- Automatically generates the `formatters_by_ft` and `formatters_by_ft` tables to be used in their respective plugins
+- Automatically generates the `formatters_by_ft` and `linters_by_ft` tables to be used in their respective plugins
 - Provides and override in case the tool name and linter name mismatch e.g. [snyk](https://github.com/snyk/cli) and `snyk_iac`
 
 # Requirements
