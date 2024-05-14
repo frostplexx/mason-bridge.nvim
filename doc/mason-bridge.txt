@@ -1,0 +1,66 @@
+*mason-bridge.nvim*     For NVIM v0.7.0     Last change: 2024 May 14
+
+==============================================================================
+Table of Contents                             *mason-bridge-table-of-contents*
+
+1. mason-bridge                                  |mason-bridge|
+  - Usage                                  |mason-bridge-usage|
+  - Configuration                  |mason-bridge-configuration|
+  - License MIT                      |mason-bridge-license-mit|
+
+==============================================================================
+1. mason-bridge                                                 *mason-bridge*
+
+Neovim plugin template integration test and doc publish.
+
+
+USAGE                                                     *mason-bridge-usage*
+
+It's important that you set up the plugins in the following order:
+
+1. `mason.nvim`
+2. `mason-bridge`
+3. `conform.nvim` and/or `nvim-lint` (this order doesnt matter)
+
+```lua
+require("mason").setup()
+require("mason-bridge").setup()
+
+-- After setting up mason-bridge you may set up conform.nvim and nvim-lint
+require("conform").setup({
+    formatters_by_ft = require("mason-bridge").get_formatters(),
+})
+
+require("lint").linters_by_ft = require("mason-bridge").get_linters()
+-- ...
+```
+
+
+CONFIGURATION                                      *mason-bridge-configuration*
+
+You may optionally configure certain behavior of `mason-bridge.nvim` when calling the `.setup()` function. Refer to
+the [default configuration](#default-configuration) for a list of all available settings.
+
+Example:
+
+```lua
+require("mason-bridge").setup({
+    overrides = {
+        linters = {
+            javascript = { "snyk_iac" },
+            docker = { "snyk_iac" }
+        },
+        formatters = {
+            my_language = {"formatter_1", "formatter_2"}
+        }
+    }
+})
+
+```
+
+LICENSE MIT                            *mason-bridge-license-mit*
+
+https://github.com/frostplexx/mason-bridge.nvim/blob/main/LICENSE
+
+
+vim:tw=78:ts=8:noet:ft=help:norl:

@@ -41,7 +41,7 @@ use {
 }
 ```
 
-# Setup 
+# Setup
 
 It's important that you set up the plugins in the following order:
 
@@ -63,6 +63,7 @@ require("conform").setup({
 require("lint").linters_by_ft = require("mason-bridge").get_linters()
 -- ...
 ```
+
 Refer to the [Configuration](#configuration) section for information about which settings are available.
 
 # Configuration
@@ -86,6 +87,7 @@ require("mason-bridge").setup({
 })
 
 ```
+
 ## Default configuration
 
 ```lua
@@ -109,3 +111,5 @@ local DEFAULT_SETTINGS = {
 - <a href="https://github.com/jay-babu/mason-nvim-dap.nvim"><code>mason-nvim-dap.nvim</code></a>
 - <a href="https://github.com/rshkarin/mason-nvim-lint"><code>mason-nvim-lint</code></a>
 - <a href="https://github.com/LittleEndianRoot/mason-conform"><code>mason-conform</code></a>
+
+[help-mason-bridge]: ./doc/mason-bridge.txt#L1
