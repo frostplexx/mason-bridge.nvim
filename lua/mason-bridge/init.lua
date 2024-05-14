@@ -37,4 +37,9 @@ M.get_linters = function()
     return cached_associations.linters or {}
 end
 
+M.get_mappings = function()
+    -- Return the cached mappings
+    return require 'util.mappings'
+end
+
 return M

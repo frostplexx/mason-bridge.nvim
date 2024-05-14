@@ -10,8 +10,14 @@ local function update_associations(associations, category, languages, name)
     local target = associations[category]
     for _, language in ipairs(languages) do
         local lang = language:lower()
-        target[lang] = target[lang] or {}
-        table.insert(target[lang], name)
+        -- if there are multiple filetypes with the same language, we need to add them all
+        -- e.g. typescriptreact and typescript becomes { typescriptreact = { name }, typescript = { name }}
+        local mappings = require 'util.mappings'
+        local filetype = mappings[lang] or { lang }
+        for _, filetype in ipairs(filetype) do
+            target[filetype] = target[filetype] or {}
+            table.insert(target[filetype], name)
+        end
     end
 end
 
@@ -23,9 +29,9 @@ local function load_associations_async(callback)
 
         for _, package in ipairs(packages) do
             local spec = package.spec
-            local categories = utils_Set(spec.categories)
             local languages = spec.languages
 
+            local categories = utils_Set(spec.categories)
             if categories['Formatter'] then
                 update_associations(associations, 'formatters', languages, spec.name)
             elseif categories['Linter'] then
