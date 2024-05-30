@@ -39,6 +39,17 @@ local function wait_until_loaded()
     end
 end
 
+M.force_reload = function()
+    cached_associations = {}
+    local util = require 'util.bridge'
+    util.load_associations_async(function(associations)
+        -- Cache the loaded associations
+        cached_associations = associations
+        -- Set the flag to indicate associations are loaded
+        associations_loaded = true
+    end)
+end
+
 -- Returns a table of formatters
 M.get_formatters = function()
     wait_until_loaded()

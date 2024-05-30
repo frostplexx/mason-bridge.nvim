@@ -34,7 +34,8 @@ local function load_associations_async(callback)
             local categories = utils_Set(spec.categories)
             if categories['Formatter'] then
                 update_associations(associations, 'formatters', languages, spec.name)
-            elseif categories['Linter'] then
+            end
+            if categories['Linter'] then
                 update_associations(associations, 'linters', languages, spec.name)
             end
         end
