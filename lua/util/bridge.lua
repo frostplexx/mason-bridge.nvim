@@ -1,3 +1,5 @@
+local _ = require 'mason-core.functional'
+
 local utils_Set = function(list)
     local set = {}
     for _, l in ipairs(list) do
@@ -8,15 +10,20 @@ end
 
 local function update_associations(associations, category, languages, name)
     local target = associations[category]
-    for _, language in ipairs(languages) do
-        local lang = language:lower()
-        -- if there are multiple filetypes with the same language, we need to add them all
-        -- e.g. typescriptreact and typescript becomes { typescriptreact = { name }, typescript = { name }}
-        local mappings = require 'util.mappings'
-        local filetype = mappings[lang] or { lang }
-        for _, filetype in ipairs(filetype) do
-            target[filetype] = target[filetype] or {}
-            table.insert(target[filetype], name)
+    -- Check if languages are specified
+    if #languages == 0 then
+        target['*'] = target['*'] or {}
+        table.insert(target['*'], name)
+    else
+        -- If languages specified, process them as before
+        for _, language in ipairs(languages) do
+            local lang = language:lower()
+            local mappings = require 'util.mappings'
+            local filetype = mappings[lang] or { lang }
+            for _, ft in ipairs(filetype) do
+                target[ft] = target[ft] or {}
+                table.insert(target[ft], name)
+            end
         end
     end
 end

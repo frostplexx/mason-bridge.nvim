@@ -1,9 +1,10 @@
 local M = {
+    -- Mapping of mason languages to filetypes
     ['c++'] = { 'cpp' },
     ['c#'] = { 'csharp' },
     ['typescript'] = { 'typescript', 'typescriptreact' },
     ['javascript'] = { 'javascript', 'javascriptreact' },
-    ['tex'] = { 'tex', 'latex', 'plaintex' },
+    ['latex'] = { 'tex', 'latex', 'plaintex' },
 }
 
 return M
