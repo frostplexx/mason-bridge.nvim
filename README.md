@@ -78,7 +78,9 @@ vim.list_extend(names, lint.linters_by_ft["*"] or {})
 lint.try_lint(names)
 ```
 
-## Dynamically Load Linters 
+## Dynamically Load Linters and Formatters
+
+### Linters
 
 You can have `nvim-lint` dynamically load linters so you dont have to restart nvim after installing or uninstalling a tool. To achive this you need to update the [autcommand from the nvim-lint README](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#usage) like this:
 ```lua
@@ -99,7 +101,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" },{
 })
 ```
 
-## Dynamically Load Formatters
+### Formatters
 
 We ask for the currently installed formatters in a similar way to how we ask for linters. To achieve this we need to turn `format_on_save` into a function that re-sets the `formatters_by_ft` for `conform.nvim` like shown in the example below.
 
