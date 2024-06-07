@@ -82,6 +82,7 @@ lint.try_lint(names)
 
 You can have `nvim-lint` dynamically load linters so you dont have to restart nvim after installing or uninstalling a tool. To achive this you need to update the [autcommand from the nvim-lint README](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#usage) like this:
 ```lua
+local bridge = require("mason-bridge")
 vim.api.nvim_create_autocmd({ "BufWritePost" },{
   callback = function()
     -- get the linters from mason
@@ -103,6 +104,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" },{
 We ask for the currently installed formatters in a similar way to how we ask for linters. To achieve this we need to turn `format_on_save` into a function that re-sets the `formatters_by_ft` for `conform.nvim` like shown in the example below.
 
 ```lua
+local bridge = require("mason-bridge")
 require("conform").setup({
 	formatters_by_ft = bridge.get_formatters(),
 	format_on_save = function(bufnr)
