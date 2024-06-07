@@ -64,6 +64,20 @@ require("lint").linters_by_ft = require("mason-bridge").get_linters()
 -- ...
 ```
 
+## Have Tools Register for Every Filetype
+
+Some tools like for example `codespell` do not have a language specified because they are to be used on every filetype / language.
+`mason-bridge` returns these tools with a `*` as the placeholder for the language.
+To correctly register correctly in nvim-lint you need to modify your `nvim-lint` config like this: 
+```lua
+local names = lint._resolve_linter_by_ft(vim.bo.filetype)
+names = vim.list_extend({}, names)
+vim.list_extend(names, lint.linters_by_ft["*"] or {})
+
+-- try_lint() can be called in an autocommand as described in the nvim-lint README
+lint.try_lint(names)
+```
+
 Refer to the [Configuration](#configuration) section for information about which settings are available.
 
 # Configuration
