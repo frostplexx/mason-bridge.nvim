@@ -104,12 +104,12 @@ We ask for the currently installed formatters in a similar way to how we ask for
 
 ```lua
 require("conform").setup({
-				formatters_by_ft = bridge.get_formatters(),
-				format_on_save = function(bufnr)
-					require("conform").formatters_by_ft = bridge.get_formatters()
-					return { timeout_ms = 200, lsp_fallback = true }, on_format
-				end,
-			})
+	formatters_by_ft = bridge.get_formatters(),
+	format_on_save = function(bufnr)
+		require("conform").formatters_by_ft = bridge.get_formatters()
+		return { timeout_ms = 200, lsp_fallback = true }, on_format
+	end,
+})
 ```
 
 Refer to the [Configuration](#configuration) section for information about which settings are available.
