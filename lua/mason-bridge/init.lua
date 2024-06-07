@@ -13,18 +13,37 @@ local DEFAULT_SETTINGS = {
 
 M.setup = function(opts)
     local util = require 'util.bridge'
+    local registry = require 'mason-registry'
+    -- Function to update cached associations
+    local update_cached_associations = function()
+        util.load_associations_async(function(associations)
+            -- Cache the loaded associations
+            cached_associations = associations
+            -- Apply overrides
+            cached_associations.formatters =
+                vim.tbl_deep_extend('force', cached_associations.formatters, opts.overrides.formatters)
+            cached_associations.linters =
+                vim.tbl_deep_extend('force', cached_associations.linters, opts.overrides.linters)
+        end)
+    end
+
     -- Load associations asynchronously
-    util.load_associations_async(function(associations)
-        -- Cache the loaded associations
-        cached_associations = associations
-        -- Merge the default settings with the user provided settings
-        opts = opts or {}
-        opts = vim.tbl_deep_extend('force', DEFAULT_SETTINGS, opts)
-        -- Apply overrides
-        cached_associations.formatters =
-            vim.tbl_deep_extend('force', cached_associations.formatters, opts.overrides.formatters)
-        cached_associations.linters = vim.tbl_deep_extend('force', cached_associations.linters, opts.overrides.linters)
-    end)
+    update_cached_associations()
+
+    -- Hook into Mason's install and uninstall commands
+    registry:on(
+        'package:install:success',
+        vim.schedule_wrap(function(_, _)
+            update_cached_associations()
+        end)
+    )
+
+    registry:on(
+        'package:uninstall:success',
+        vim.schedule_wrap(function(_)
+            update_cached_associations()
+        end)
+    )
 end
 
 M.get_formatters = function()

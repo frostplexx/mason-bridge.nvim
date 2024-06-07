@@ -5,6 +5,7 @@ local M = {
     ['typescript'] = { 'typescript', 'typescriptreact' },
     ['javascript'] = { 'javascript', 'javascriptreact' },
     ['latex'] = { 'tex', 'latex', 'plaintex' },
+    ['bash'] = { 'sh', 'bash' },
 }
 
 return M
