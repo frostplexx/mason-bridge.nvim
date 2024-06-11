@@ -20,13 +20,13 @@ M.setup = function(opts)
             -- Cache the loaded associations
             cached_associations = associations
             -- Apply overrides
-
+            opts = vim.tbl_deep_extend('force', DEFAULT_SETTINGS, opts)
             cached_associations.formatters =
-                vim.tbl_deep_extend('force', cached_associations.formatters,
-                    (opts.overrides == nil and {} or opts.overrides.formatters))
+                vim.tbl_deep_extend('force', cached_associations.formatters or {},
+                    opts.overrides.formatters == nil and {} or opts.overrides.formatters)
             cached_associations.linters =
-                vim.tbl_deep_extend('force', cached_associations.linters,
-                    (opts.overrides == nil and {} or opts.overrides.linters))
+                vim.tbl_deep_extend('force', cached_associations.linters or {},
+                    opts.overrides == nil and {} or opts.overrides.linters)
         end)
     end
 
