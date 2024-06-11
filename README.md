@@ -78,6 +78,44 @@ vim.list_extend(names, lint.linters_by_ft["*"] or {})
 lint.try_lint(names)
 ```
 
+## Dynamically Load Linters and Formatters
+
+### Linters
+
+You can have `nvim-lint` dynamically load linters so you dont have to restart nvim after installing or uninstalling a tool. To achive this you need to update the [autcommand from the nvim-lint README](https://github.com/mfussenegger/nvim-lint?tab=readme-ov-file#usage) like this:
+```lua
+local bridge = require("mason-bridge")
+vim.api.nvim_create_autocmd({ "BufWritePost" },{
+  callback = function()
+    -- get the linters from mason
+    local linters = bridge.get_linters()
+    -- filter for linters for the current filetype
+    local names = linters[vim.bo.filetype] or {}
+    -- Create a copy of the names table to avoid modifying the original.
+    names = vim.list_extend({}, names)
+    -- insert the linters that have ["*"] as filetype into the names table
+    vim.list_extend(names, linters["*"])
+    -- apply those linters to the current buffer
+    lint.try_lint(names)
+  end,
+})
+```
+
+### Formatters
+
+We ask for the currently installed formatters in a similar way to how we ask for linters. To achieve this we need to turn `format_on_save` into a function that re-sets the `formatters_by_ft` for `conform.nvim` like shown in the example below.
+
+```lua
+local bridge = require("mason-bridge")
+require("conform").setup({
+	formatters_by_ft = bridge.get_formatters(),
+	format_on_save = function(bufnr)
+		require("conform").formatters_by_ft = bridge.get_formatters()
+		return { timeout_ms = 200, lsp_fallback = true }, on_format
+	end,
+})
+```
+
 Refer to the [Configuration](#configuration) section for information about which settings are available.
 
 # Configuration
@@ -117,8 +155,8 @@ local DEFAULT_SETTINGS = {
 # Roadmap
 
 - [ ] Add a handler system similar to `mason-lspconfig.nvim` and `mason-nvim-dap.nvim`
-- [ ] Testing if the all filetypes are detected correctly is required
-- [ ] Add vim help file
+- [ ] Find i better way of handling language to filetype mappings
+- [x] Add vim help file
 
 # Similar Projects
 
